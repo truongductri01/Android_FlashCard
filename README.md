@@ -20,5 +20,5 @@ An application built by Java and Android Studio to support users reivew and rele
 - [x] toggle the flashcard between the question side and the answer side
 - [x] Style the question and answer side of the card to better distinguish between the two sides
 - [x] Add selectable multiple choice answers beneath the card
-- [ ] Change the background color of the multiple choice answers when clicked to indicate whether the question waanswered correctly
+- [x] Change the background color of the multiple choice answers when clicked to indicate whether the question waanswered correctly
 - [ ] Further customize and style the card
