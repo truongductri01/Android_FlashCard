@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     TextView flashcard_question;
     TextView flashcard_answer;
@@ -73,5 +75,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // receive new Card
+        receiveNewCard(this.getIntent());
+    }
+
+    void receiveNewCard(Intent intent) {
+        ArrayList<String> newCard;
+        if (intent.hasExtra("new_card")) {
+            newCard = intent.getStringArrayListExtra("new_card");
+            flashcard_question.setText(newCard.get(0));
+            flashcard_answer.setText(newCard.get(1));
+
+            answer1.setVisibility(View.INVISIBLE);
+            answer2.setVisibility(View.INVISIBLE);
+            answer3.setVisibility(View.INVISIBLE);
+        }
     }
 }
