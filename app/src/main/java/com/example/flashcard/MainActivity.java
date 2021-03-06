@@ -2,9 +2,11 @@ package com.example.flashcard;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     TextView answer1;
     TextView answer2;
     TextView answer3;
+    ImageView addCardBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
         answer1 = findViewById(R.id.first_answer);
         answer2 = findViewById(R.id.second_answer);
         answer3 = findViewById(R.id.third_answer);
-
+        Intent intent = new Intent(this, AddCardActivity.class);
+        addCardBtn = findViewById(R.id.addCardBtn);
         flashcard_question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +64,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 answer1.setBackgroundColor(getResources().getColor(R.color.lime_green));
                 answer3.setBackgroundColor(getResources().getColor(R.color.crimson));
+            }
+        });
+
+        addCardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent);
             }
         });
     }
