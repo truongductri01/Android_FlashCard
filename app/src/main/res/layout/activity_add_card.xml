@@ -15,4 +15,23 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         app:srcCompat="@drawable/cancel_btn" />
+
+    <EditText
+        android:id="@+id/questionEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_margin="10dp"
+        android:hint="Enter the Question here"/>
+
+    <EditText
+        android:id="@+id/answerEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_margin="10dp"
+        android:layout_below="@id/questionEditText"
+        android:hint="Enter the Answer here" />
 </RelativeLayout>
