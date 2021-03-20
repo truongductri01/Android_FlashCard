@@ -1,5 +1,6 @@
 package com.example.flashcard;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,16 +9,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     TextView flashcard_question;
     TextView flashcard_answer;
-    TextView answer1;
-    TextView answer2;
-    TextView answer3;
     ImageView addCardBtn;
+    ImageView nextCardBtn;
+    FlashcardDatabase flashcardDatabase;
+    List<Flashcard> allFlashcards;
+    int ADD_CARD_REQUEST_CODE = 100;
+    int currentCardIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +31,23 @@ public class MainActivity extends AppCompatActivity {
 
         flashcard_question = findViewById(R.id.flashcard_question);
         flashcard_answer = findViewById(R.id.flashcard_answer);
-        answer1 = findViewById(R.id.first_answer);
-        answer2 = findViewById(R.id.second_answer);
-        answer3 = findViewById(R.id.third_answer);
-        Intent intent = new Intent(this, AddCardActivity.class);
         addCardBtn = findViewById(R.id.addCardBtn);
+        nextCardBtn = findViewById(R.id.nextCardBtn);
+        flashcardDatabase = new FlashcardDatabase(getApplicationContext());
+        allFlashcards = flashcardDatabase.getAllCards();
+
+        if (!allFlashcards.isEmpty()){
+            Flashcard flashcard = allFlashcards.get(currentCardIndex);
+            flashcard_question.setText(flashcard.getQuestion());
+            flashcard_answer.setText(flashcard.getAnswer());
+
+            if (allFlashcards.size() > 1){
+                nextCardBtn.setVisibility(View.VISIBLE);
+            }else{
+                nextCardBtn.setVisibility(View.INVISIBLE);
+            }
+        }
+
         flashcard_question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,49 +64,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        answer1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            answer1.setBackgroundColor(getResources().getColor(R.color.lime_green));            }
-        });
-
-        answer2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                answer1.setBackgroundColor(getResources().getColor(R.color.lime_green));
-                answer2.setBackgroundColor(getResources().getColor(R.color.crimson));
-            }
-        });
-
-        answer3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                answer1.setBackgroundColor(getResources().getColor(R.color.lime_green));
-                answer3.setBackgroundColor(getResources().getColor(R.color.crimson));
-            }
-        });
-
         addCardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
+                MainActivity.this.startActivityForResult(intent, ADD_CARD_REQUEST_CODE);
             }
         });
 
-        // receive new Card
-        receiveNewCard(this.getIntent());
+        nextCardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentCardIndex < allFlashcards.size() - 1){
+                    currentCardIndex += 1;
+                }
+                else{
+                    currentCardIndex = 0;
+                }
+                Flashcard flashcard = allFlashcards.get(currentCardIndex);
+                flashcard_question.setText(flashcard.getQuestion());
+                flashcard_answer.setText(flashcard.getAnswer());
+            }
+        });
     }
 
-    void receiveNewCard(Intent intent) {
-        ArrayList<String> newCard;
-        if (intent.hasExtra("new_card")) {
-            newCard = intent.getStringArrayListExtra("new_card");
-            flashcard_question.setText(newCard.get(0));
-            flashcard_answer.setText(newCard.get(1));
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_CARD_REQUEST_CODE) {
+            assert data != null;
+            String question = data.getExtras().getString("question");
+            String answer = data.getExtras().getString("answer");
 
-            answer1.setVisibility(View.INVISIBLE);
-            answer2.setVisibility(View.INVISIBLE);
-            answer3.setVisibility(View.INVISIBLE);
+            flashcard_question.setText(question);
+            flashcard_answer.setText(answer);
+
+            // Save to database
+            flashcardDatabase.insertCard(new Flashcard(question, answer));
+            allFlashcards = flashcardDatabase.getAllCards();  // update the list of Cards
         }
     }
 }

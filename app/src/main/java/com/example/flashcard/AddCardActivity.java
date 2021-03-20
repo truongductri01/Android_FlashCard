@@ -31,15 +31,14 @@ public class AddCardActivity extends AppCompatActivity {
         saveCardBtn = findViewById(R.id.saveCardBtn);
         questionET = findViewById(R.id.questionEditText);
         answerET = findViewById(R.id.answerEditText);
-        ArrayList<String> flashCard = new ArrayList<>();
-        Intent intent = new Intent(this, MainActivity.class);
+
         saveCardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flashCard.add(questionET.getText().toString());
-                flashCard.add(answerET.getText().toString());
-                intent.putExtra("new_card", flashCard);
-                startActivity(intent);
+                Intent data = new Intent();
+                data.putExtra("question", questionET.getText().toString());
+                data.putExtra("answer", answerET.getText().toString());
+                setResult(RESULT_OK, data);
                 finish();
             }
         });

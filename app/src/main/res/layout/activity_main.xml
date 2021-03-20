@@ -21,6 +21,7 @@
         android:text="Who is the 44th President of the United States?"
         android:textSize="40sp" />
 
+
     <TextView
         android:id="@+id/flashcard_answer"
         android:layout_width="match_parent"
@@ -31,41 +32,6 @@
         android:textSize="40sp"
         android:visibility="invisible" />
 
-    <TextView
-        android:id="@+id/first_answer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/flashcard_question"
-        android:layout_marginTop="10dp"
-        android:background="#80FFC107"
-        android:gravity="center"
-        android:text="Barack Obama"
-        android:textColor="#2196F3"
-        android:textSize="30sp" />
-    <TextView
-        android:id="@+id/second_answer"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:textColor="#2196F3"
-        android:background="#80FFC107"
-        android:layout_below="@id/first_answer"
-        android:text="George H. W. Bush" />
-
-    <TextView
-        android:id="@+id/third_answer"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:background="#80FFC107"
-        android:textColor="#2196F3"
-        android:layout_below="@id/second_answer"
-        android:text="Bill Clinton" />
-
     <ImageView
         android:id="@+id/addCardBtn"
         android:layout_width="100dp"
@@ -75,4 +41,13 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
         app:srcCompat="@drawable/add_circle" />
+
+    <ImageView
+        android:id="@+id/nextCardBtn"
+        android:layout_width="114dp"
+        android:layout_height="82dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="0dp"
+        app:srcCompat="@drawable/next_icon" />
 </RelativeLayout>
