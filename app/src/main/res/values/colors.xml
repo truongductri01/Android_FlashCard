@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="crimson">#DC143C</color>
     <color name="lime_green">#32CD32</color>
+    <color name="dark_blue">#134b86</color>
+    <color name="dark_green">#097b90</color>
+    <color name="turquoise">#2bcdb1</color>
+    <color name="nude">#fff7da</color>
 </resources>
